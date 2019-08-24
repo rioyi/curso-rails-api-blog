@@ -1,24 +1,61 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Rspec
 
-Things you may want to cover:
+In your project directory:
 
-* Ruby version
+### Download and install
 
-* System dependencies
+`$ bundle install`
 
-* Configuration
+### Generate boilerplate configuration files
 
-* Database creation
+### (check the comments in each generated file for more information)
 
-* Database initialization
+`$ rails generate rspec:install
+      create  .rspec
+      create  spec
+      create  spec/spec_helper.rb
+      create  spec/rails_helper.rb`
 
-* How to run the test suite
+Creating boilerplate specs with rails generate
 
-* Services (job queues, cache servers, search engines, etc.)
+### RSpec hooks into built-in generators
 
-* Deployment instructions
+`$ rails generate model user
+      invoke  active_record
+      create    db/migrate/20181017040312_create_users.rb
+      create    app/models/user.rb
+      invoke    rspec
+      create      spec/models/user_spec.rb`
 
-* ...
+### RSpec also provides its own spec file generators
+
+`$ rails generate rspec:model user
+      create  spec/models/user_spec.rb`
+
+### List all RSpec generators
+
+`$ rails generate --help | grep rspec`
+
+Running specs
+
+### Default: Run all spec files (i.e., those matching spec/**/*_spec.rb)
+
+`$ bundle exec rspec`
+
+### Run all spec files in a single directory (recursively)
+
+`$ bundle exec rspec spec/models`
+
+### Run a single spec file
+
+`$ bundle exec rspec spec/controllers/accounts_controller_spec.rb`
+
+### Run a single example from a spec file (by line number)
+
+`$ bundle exec rspec spec/controllers/accounts_controller_spec.rb:8`
+
+### See all options for running specs
+
+`$ bundle exec rspec --help`
