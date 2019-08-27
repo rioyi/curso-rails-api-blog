@@ -21,7 +21,7 @@ RSpec.describe 'Posts', type: :request do
         expect(payload).to_not be_empty
         expect(payload.size).to eq(2)
         expect(payload.map {|p| p['id']}.sort).to eq([hola_mundo.id, hola_mary.id].sort)
-        expect(response.status).to have_http_status(:ok)
+        expect(response).to have_http_status(:ok)
       end
     end
 
