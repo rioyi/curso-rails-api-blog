@@ -10,6 +10,21 @@ RSpec.describe 'Posts', type: :request do
       expect(payload).to be_empty
       expect(response).to have_http_status(200)
     end
+
+    describe "Search" do
+      let!(:hola_mundo) { create(:published_post, title: 'Hola mundo') }
+      let!(:hola_mary) { create(:published_post, title: 'Hola mary') }
+      let!(:vamos_ruby) { create(:published_post, title: 'Vamos ruby') }
+      it 'should filter posts by title' do
+        get '/posts?search=Hola'
+        payload = JSON.parse(response.body)
+        expect(payload).to_not be_empty
+        expect(payload.size).to eq(2)
+        expect(payload.map {|p| p['id']}.sort).to eq([hola_mundo.id, hola_mary.id].sort)
+        expect(response.status).to have_http_status(:ok)
+      end
+    end
+
   end
 
   describe 'with  data in the DB' do
@@ -30,7 +45,6 @@ RSpec.describe 'Posts', type: :request do
     it 'should return a post' do
       get "/posts/#{post.id}"
       payload = JSON.parse(response.body)
-      byebug
       expect(payload).to_not be_empty
       expect(payload['id']).to eq(post.id)
       expect(payload['title']).to eq(post.title)
