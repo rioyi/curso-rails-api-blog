@@ -20,18 +20,23 @@ class PostsController < ApplicationController
   # GET /post/{id}
   def show
     @post = Post.find(params[:id])
-    render json: @post, status: :ok
+    if (@post.published? || (Current.user && @post.user_id == Current.user.id))
+      render json: @post, status: :ok
+    else
+      render json: { error: 'Not Fount' }, status: :not_found
+    end
   end
+
 
   # POST /post
   def create
-    @post = Post.create!(create_params)
+    @post = Current.user.posts.create!(create_params)
     render json: @post, status: :created
   end
 
   # PUT /post/{id}
   def update
-    @post = Post.find(params[:id])
+    @post = Current.user.posts.find(params[:id])
     @post.update!(update_params)
     render json: @post, status: :ok
   end

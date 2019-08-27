@@ -20,8 +20,8 @@ RSpec.describe "Posts with authentication", type: :request do
 
           # payload
           context "payload" do
-            subject { JSON.parse(response.body) }
-            it { is_expected.to include(:id) }
+            subject { payload }
+            it { is_expected.to include('id') }
           end
 
           # response
@@ -37,7 +37,7 @@ RSpec.describe "Posts with authentication", type: :request do
 
           # payload
           context "payload" do
-            subject { JSON.parse(response.body) }
+            subject { payload }
             it { is_expected.to include(:error) }
           end
 
@@ -58,5 +58,12 @@ RSpec.describe "Posts with authentication", type: :request do
   end
 
   describe "PUT /post" do
+  end
+
+  private
+
+  def payload
+    # es de hash es para acceder a la key como simbolo, string o como sea
+    JSON.parse(response.body).with_indifferent_access
   end
 end
