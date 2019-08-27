@@ -10,4 +10,8 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     render json: @post, status: :ok
   end
+
+  def create
+
+  end
 end
