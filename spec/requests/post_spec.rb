@@ -30,8 +30,15 @@ RSpec.describe 'Posts', type: :request do
     it 'should return a post' do
       get "/posts/#{post.id}"
       payload = JSON.parse(response.body)
+      byebug
       expect(payload).to_not be_empty
       expect(payload['id']).to eq(post.id)
+      expect(payload['title']).to eq(post.title)
+      expect(payload['content']).to eq(post.content)
+      expect(payload['published']).to eq(post.published)
+      expect(payload['author']['name']).to eq(post.user.name)
+      expect(payload['author']['email']).to eq(post.user.email)
+      expect(payload['author']['id']).to eq(post.user.id)
     end
   end
 
