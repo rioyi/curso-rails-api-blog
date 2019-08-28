@@ -2,9 +2,9 @@ class PostReport < Struct.new(:word_count, :word_histogram)
   def self.generate(post)
     PostReport.new(
       # word_count
-      post.content.split.map { |word| word.gsub(/\W/, '') }.count
+      post.content.split.map { |word| word.gsub(/\W/, '') }.count,
       # word_histogram
-        (post)
+      calc_histogram(post)
     )
   end
 
